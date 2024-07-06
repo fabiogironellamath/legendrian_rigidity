@@ -1,0 +1,531 @@
+% document class
+\documentclass[11pt]{amsart}
+
+% AMS packages
+\usepackage{amsmath, amsthm, amssymb}
+
+\usepackage{parskip}%No Indent
+  
+% fonts
+\usepackage{lmodern}
+\usepackage{palatino}                       % text font
+\usepackage[bigdelims,vvarbb]{newpxmath}    % math font
+\usepackage[scaled=0.95]{inconsolata}       % Sans font 
+\linespread{1.12}                           % spacing
+\usepackage[T1]{fontenc}                    % font encoding 
+
+
+% comments
+\usepackage{comment}
+
+% figures
+\usepackage[abs]{overpic}		  % overpic automatically loads graphicx
+\usepackage[all,cmtip]{xy}
+
+% hyperlinks
+\usepackage{xcolor}
+\definecolor{indigo}{rgb}{0.29, 0.0, 0.51}  % custom colors
+\usepackage[colorlinks, urlcolor=indigo, linkcolor=indigo, citecolor=indigo]{hyperref}
+
+% margins
+\usepackage[hcentering, vcentering, total={5.9in, 8.2in}]{geometry}  % 1.4 vertical margin; 1.3 horizontal margin
+
+% tikz
+\usepackage{tikz}
+\usetikzlibrary{trees}
+
+% arrows
+\usepackage{mathtools}
+
+% theorems
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{claim}{Claim}
+
+% definition
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+% remark
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{construction}[theorem]{Construction}
+
+% theorem counter
+\numberwithin{theorem}{section}
+
+% macros
+% Do not use \def, use \newcommand
+% basic macros
+\newcommand{\dfn}[1]{{\em #1}}        % definition
+\DeclareMathOperator{\bd}{\partial}   % boundary
+\DeclareMathOperator{\interior}{int}  % interior
+\newcommand{\modp}[1]{\;(\!\!\!\!\!\!\mod #1)}      % mod for display math. \pmod is for inline math 
+\newcommand{\case}[1]{\begin{cases} #1 \end{cases}} % cases
+
+% mathbb
+\newcommand{\R}{\mathbb{R}}           % the real numbers
+\newcommand{\Q}{\mathbb{Q}}           % the rational numbers
+\newcommand{\Z}{\mathbb{Z}}           % the integers
+\newcommand{\CC}{\mathbb{C}}           % the complex numbers
+\newcommand{\N}{\mathbb{N}}           % the natural numbers
+%\newcommand{\F}{\mathbb{F}}           % field
+\newcommand{\NS}{{\mathbb{S}}}
+\newcommand{\T}{{\mathbb{T}}}
+\newcommand{\D}{{\mathbb{D}}}
+\newcommand{\B}{{\mathbb{B}}}
+\newcommand{\PP}{{\mathbb{P}}}
+\newcommand{\Op}{{\mathcal{O}p}}
+\newcommand{\ST}{{\mathcal{T}}}
+
+% mathcal
+\newcommand{\K}{\mathcal{K}}           % spaces of knots
+\renewcommand{\L}{\mathcal{L}}           % spaces of Legendrian knots
+\newcommand{\FL}{\mathcal{FL}}           % spaces of formal Legendrian knots
+\newcommand{\KL}{\mathcal{KL}} 
+\newcommand{\KC}{\mathcal{KC}} 
+
+% bigger cdot, smaller than bullet
+\makeatletter
+\newcommand*\bigcdot{\mathpalette\bigcdot@{0.6}}
+\newcommand*\bigcdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+\makeatother
+
+% vectors
+\newcommand{\vect}[2]{\left(\begin{matrix} #1 \\ #2 \end{matrix}\right)}             % 2x1 vector
+\newcommand{\vects}[2]{\left(\begin{smallmatrix} #1 \\ #2 \end{smallmatrix}\right)}  % inline 2x1 vector
+\newcommand{\dvec}[1]{\frac{\partial}{\partial #1}}                                % differential vector
+\newcommand{\dvecin}[1]{\partial / \partial #1}                                % inline differential vector
+
+% matrices
+\newcommand{\matrixs}[4]{{\bigl(\begin{smallmatrix}#1&#2\\ #3&#4\end{smallmatrix} \bigr)}}  % inline 2x2 matrix
+\newcommand{\matrixp}[4]{{\begin{pmatrix}#1 & #2 \\ #3 & #4\end{pmatrix}}}                  % parenthesis 2x2 matrix
+\newcommand{\matrixb}[4]{{\begin{bmatrix}#1 & #2 \\ #3 & #4\end{bmatrix}}}                  % bracket 2x2 matrix
+
+% contact geometry macros
+%\DeclareMathOperator{\Tight}{Tight}
+%\DeclareMathOperator\tb{tb}                               % Thurston-Bennequin
+%\DeclareMathOperator\tbb{\overline {\tb}}                 % maximum Thurston-Bennequin
+%\DeclareMathOperator\rot{rot}                             % rotation
+%\DeclareMathOperator\self{sl}                             % self linking
+%\DeclareMathOperator\selfb{\overline {\self}}             % maximum self linking
+%\DeclareMathOperator\tw{tw}                               % twisting number
+\DeclareMathOperator\twb{\overline {\tw}}                 % maximum twisting number
+
+% gauge theory macros
+\DeclareMathOperator{\SW}{\mathcal{SW}}     %SW
+\DeclareMathOperator{\spins}{\mathfrak{s}}
+\DeclareMathOperator{\spint}{\mathfrak{t}}
+\DeclareMathOperator{\relspins}{\underline{\mathfrak{s}}}
+\DeclareMathOperator{\relspint}{\underline{\mathfrak{t}}}
+\DeclareMathOperator{\spinc}{\mathrm{Spin}^{\textit{c}}}  %Spin^c
+\DeclareMathOperator{\relspinc}{\underline{\mathrm{Spin}^{\textit{c}}}}
+
+% Heegaard Floer macros
+\DeclareMathOperator{\HFhat}{\widehat{{HF}}}  % HF^
+\DeclareMathOperator{\HFplus}{{{HF}}^+}       % HF+
+\DeclareMathOperator{\HFminus}{{{HF}}^{--}}   % HF-
+\DeclareMathOperator{\CFhat}{\widehat{CF}}    % CF^    
+\DeclareMathOperator{\CFplus}{{{CF}}^+}       % CF+    
+\DeclareMathOperator{\CFminus}{{{CF}}^{--}}   % CF-    
+\DeclareMathOperator{\HFKhat}{\widehat{HFK}}  % HFK^
+\DeclareMathOperator{\HFKminus}{{{HFK}}^{--}} % HFK-
+\DeclareMathOperator{\CFKhat}{\widehat{CFK}}  % CFK^
+\DeclareMathOperator{\CFKminus}{{{CFK}}^{--}} % CFK-
+
+% 4-manifolds macros
+\DeclareMathOperator{\cp}{\mathbb{C}{{P}}^2}  % CP2
+\DeclareMathOperator{\cpbar}{\overline{\mathbb{C}P^2}}  % CP2bar
+
+% diffeomorphism macros
+%\DeclareMathOperator{\Diff}{Diff}         % group of diffeomorphisms 
+%\DeclareMathOperator{\Cont}{Cont}         % group of contactomorphisms 
+\DeclareMathOperator{\PB}{{{PB}}}          % pure braid group 
+
+%Import symbols from font cmr without importing the whole package
+\DeclareFontFamily{U} {cmr}{}
+\DeclareFontShape{U}{cmr}{m}{n}{
+  <-6> cmr5
+  <6-7> cmr6
+  <7-8> cmr7
+  <8-9> cmr8
+  <9-10> cmr9
+  <10-12> cmr8
+  <12-> cmr9}{}
+\DeclareSymbolFont{Xcmr} {U} {cmr}{m}{n}
+\DeclareMathSymbol{\Phi}{\mathord}{Xcmr}{8}
+
+\DeclareMathOperator\tbb{\overline {\tb}}     % maximum Thurston-Bennequin
+\newcommand{\tcan}{\mathbb{T}^2_{\text{can}}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+
+
+\newcommand{\Gr}{\operatorname{Gr}}
+\newcommand{\GL}{\operatorname{GL}}
+\newcommand{\SL}{\operatorname{SL}}
+\newcommand{\PGL}{\operatorname{\mathbb{P}GL}}
+\newcommand{\Diff}{\operatorname{Diff}}
+\newcommand{\Ort}{\operatorname{O}}
+\newcommand{\SO}{\operatorname{SO}}
+\newcommand{\U}{\operatorname{U}}
+\newcommand{\Sp}{\operatorname{Sp}}
+\newcommand{\SU}{\operatorname{SU}}
+\newcommand{\End}{{\operatorname{End}}}
+\newcommand{\Mon}{\operatorname{Mon}}
+\newcommand{\Ar}{\operatorname{Area}}
+\newcommand{\Int}{\operatorname{Int}}
+\newcommand{\Mono}{\operatorname{Mono}}
+\newcommand{\Iso}{\operatorname{Iso}}
+\newcommand{\rel}{\operatorname{rel}}
+\newcommand{\real}{\operatorname{real}}
+\newcommand{\SHE}{\operatorname{SHE}}
+\newcommand{\RR}{\operatorname{ref}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\Maps}{\operatorname{Maps}}
+
+
+
+\newcommand{\im}{{\operatorname{Image}}}
+\newcommand{\Id}{{\operatorname{Id}}}
+\newcommand{\fr}{\operatorname{fr}}
+\newcommand{\rot}{\operatorname{rot}}
+\newcommand{\tb}{\operatorname{tb}}
+\newcommand{\rotconr}{\operatorname{r}}
+\newcommand{\tw}{\operatorname{tw}}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\Sl}{\operatorname{sl}}
+
+%\newcommand{\Top}{\operatorname{Top}}
+\newcommand{\Cont}{\operatorname{Cont}}
+\newcommand{\FCont}{\operatorname{FCont}}
+\newcommand{\HM}{\operatorname{H}}%HOMOLOGIA/COHOMOLOGIA
+\newcommand{\Fr}{\operatorname{Fr}}
+\newcommand{\CFr}{\operatorname{CFr}}
+\newcommand{\ev}{\operatorname{ev}}
+\newcommand{\Symp}{\operatorname{Symp}}
+\newcommand{\Tight}{\operatorname{Tight}}
+\newcommand{\SCont}{\operatorname{CStr}}
+\newcommand{\Funct}{\operatorname{{\mathcal F} unct}}
+\newcommand{\Good}{\operatorname{Good}}
+\newcommand{\Germs}{\operatorname{Germs}}
+
+\newcommand{\pr}{\operatorname{pr}}
+
+\newcommand{\image}{\operatorname{Image}}
+
+\newcommand{\C}{\operatorname{C}}
+\newcommand{\FC}{\operatorname{FC}}
+\newcommand{\OT}{\operatorname{OT}}
+\newcommand{\SOT}{\operatorname{SOT}}
+\newcommand{\Emb}{{\operatorname{Emb}}}
+\newcommand{\FEmb}{{\operatorname{FEmb}}}
+\newcommand{\FDiff}{{\operatorname{FDiff}}}
+\newcommand{\F}{{\operatorname{\mathcal{F}}}}
+\newcommand{\Germ}{\operatorname{Germ}}
+\newcommand{\support}{\operatorname{Support}}
+
+
+
+%*********************************************************************
+\begin{document} 
+
+% title
+\title{Contact anti-surgery and Legendrian Rigidity in overtwisted contact manifolds}
+
+\author{Eduardo Fern\'andez}
+
+\author{Fabio Gironella}
+
+
+\maketitle
+
+\begin{abstract}
+    We use contact anti-surgeries to find new instances of rigidity phenomena for Legendrian embeddings. 
+    On one hand, in each dimension $2n+1\geq 5$, we show the existence of infinitely many overtwisted contact $(2n+1)$-manifolds for each of which the formal class of the standard Legendrian unknot admits infinitely many Legendrian representatives, up to Legendrian isotopy. 
+    These examples include every homotopically standard overtwisted sphere. 
+    On the other hand, in every dimension, we prove that every contactomorphism formally isotopic to the identity, relative to a Darboux ball, is generated by a $1$-parameter Legendrian surgery operation along a suitable Legendrian loop in some overtwisted contact manifold. 
+    As a corollary, we show that in every overtwisted contact $3$-manifold there are infinitely many loops of loose Legendrians which are contractible among formal Legendrians but non-contractible among Legendrians.
+\end{abstract}
+
+\textcolor{red}{to think: contact pushoffs of the legendrians, diagram for vogel example, surgery realization in higher dimensions (this is about the algebraic topology really, difference between almost contact and formal contact), the non-loose unknots are formally standard, add comparison with 4D setting where they look at pseudoisotopies as motivation for last thm.}
+
+\textcolor{red}{to write/edit: add some pictures:):) all the discussion about non-loose legendrians in Athens, preliminary stuff about Legendrian surgeries/cancellation, add Weinstein tubular neighborhood with parameters for the surgery HOMOMORPHISM. Finish the proof of Lemma 2.1. (formal isotopy fixing a ball)}
+
+\section{Introduction}
+
+\subsection{Non-loose Legendrians in overtwisted contact manifolds}
+
+The main goal is to prove the following: 
+
+\begin{theorem}\label{thm:NonLoose}
+Let $(M^{2n+1},\xi)$, $2n+1\geq 5$, be an almost Weinstein fillable overtwisted contact manifold with $c_1(M,\xi)=0$. Then, there exists an infinite family of Legendrian spheres $\Lambda_i\subseteq (M,\xi)$, $i\in \Z_{\geq0}$, such that
+\begin{itemize}
+    \item [(a)] $\Lambda_i$ is non-loose and, in particular, $(M\backslash \Lambda_i,\xi)$ is tight, 
+    
+    \item [(b)] $\Lambda_i$ is formally Legendrian isotopic to the standard Legendrian unknot.
+    
+    \item [(c)] $\Lambda_i$ and $\Lambda_j$ are not Legendrian isotopic if $i\neq j$. 
+    
+\end{itemize}
+\end{theorem}
+
+\begin{remark}
+    The dimensional restriction in Theorem \ref{thm:NonLoose} is essential. In dimension $3$, every Legendrian unknot formally Legendrian equivalent to the standard Legendrian unknot is actually Legendrian isotopic to it. In particular, when the ambient contact $3$-manifold is overtwisted then is loose. 
+\end{remark}
+
+\subsection{Formally contractible but non-contractible loops of Legendrians in overtwisted contact $3$-manifolds}
+
+Let $(M^3,\xi)$ be a contact $3$-manifold and $\Lambda\subseteq (M,\xi)$ an embedded Legendrian link. We will denote by $\L(\Lambda,(M,\xi))$ the path-connected component of the inclusion $\Lambda\hookrightarrow (M,\xi)$ in the space of Legendrian embeddings into $(M,\xi)$. Similarly, we will denote by $\FL(\Lambda,(M,\xi))$ the path-connected component of the inclusion $\Lambda\hookrightarrow (M,\xi)$ in the space of formal Legendrian embeddings. 
+
+We are interested in the group 
+
+$$ \KL_1(\Lambda,(M,\xi)):=\ker ( \pi_1(\L(\Lambda,(M,\xi)))\rightarrow \pi_1(\FL(\Lambda,(M,\xi))) ) $$
+
+\begin{theorem}\label{thm:LoopsOfLegendrians}
+Let $(M^3,\xi)$ be an overtwisted contact $3$-manifold. Then, there exists an infinite family of Legendrians $\Lambda_i\subseteq (M,\xi)$, $i\in \Z_{\geq0}$ such that
+\begin{itemize}
+    \item [(a)] $\Lambda_i$ is loose,
+    \item [(b)] $\Lambda_i$ is not smoothly isotopic to $\Lambda_j$ for $i\neq j$,
+    \item [(c)] The group $\KL_1(\Lambda_i,(M,\xi))$ is non-trivial.
+\end{itemize}
+\end{theorem}
+\textcolor{red}{to think about: high dimension examples}
+
+The previous result follows from a general construction that we describe below. Given a Legendrian $\Lambda\subseteq (M,\xi)$ we will denote by $(M(\Lambda),\xi(\Lambda))$ the Legendrian surgery of $(M,\xi)$ along $\Lambda$. 
+
+Let $\Lambda^\theta\subseteq (M,\xi)$, $\theta\in \NS^1$, be a loop of Legendrian \em embeddings \em with base point $\Lambda=\Lambda^0$. Out of this data we can produce a contactomorphism of $(M(\Lambda),\xi(\Lambda))$ as follows. Perform a $1$-parameter family of Legendrian surgeries along $\Lambda$ to build a bundle 
+$$ (M(\Lambda),\xi(\Lambda))\hookrightarrow X^{2n}\rightarrow \NS^1 $$
+where the fiber over $\theta\in \NS^1$ is $(M(\Lambda^{\theta}),\xi(\Lambda^{\theta}))$. The monodromy of this bundle is naturally a contactomorphism 
+$$ W(\Lambda^\theta)\in \Cont(M(\Lambda),\xi(\Lambda)). $$
+We will refer to $W(\Lambda^\theta)$ as \em Legendrian surgery contactomorphism (of $\Lambda^\theta$).\em
+
+In fact, as a consequence of of the contractibility of the space of Weinstein neighborhoods of a given Legendrian \textcolor{red}{Write Lemma}, this assignment defines a homomorphism
+$$ W: \pi_1(\L(L,(M,\xi)))\rightarrow \pi_0(\Cont(M(\Lambda),\xi(\Lambda))). $$
+
+It is natural to ask which contactomorphisms of a given contact manifold $(M,\xi)$ can be realized as Legendrian surgery contactomorphisms. We prove that every potentially ``geometrically interesting'' contactomorphisms arise in this way. Here, by potentially ``geometrically interesting'' we mean elements in the group 
+$$ \KC_0 (M,\xi)=\ker( \pi_0(\Cont(M,\xi))\rightarrow \pi_0(\FCont(M,\xi))). $$
+
+The general realization result reads as follows
+
+\begin{theorem}\label{thm:SurgeryContactomorphism}
+    Let $(N,\xi_{\OT})$ be an overtwisted contact manifold and $\Lambda\subseteq (N,\xi_{\OT})$ a Legendrian such that $(N(\Lambda),\xi_{\OT}(\Lambda))=(\NS^{2n+1},\xi_{std})$. Then, for every contact manifold $(M,\xi)$ the restriction homomorphism 
+    $$ W: \KL_1(\Lambda, (M,\xi)\#(N,\xi_{\OT}))\rightarrow \KC_0(M,\xi) $$
+    is surjective. 
+\end{theorem}
+
+
+
+
+
+
+% \begin{theorem}\label{thm:main}
+% Let $(M^{2n+1},\eta)$, $2n+1\geq 7$, be an almost Weinstein fillable almost contact manifold. Then, there exists an overtwisted contact structure $\xi$ on $M$ in the same almost contact class as $\eta$ and an infinite family of Legendrian spheres $\Lambda_i\subseteq (M,\xi)$, $i\in \Z_{\geq 0}$, such that
+% \begin{itemize}
+%     \item [(a)] $(M\backslash \Lambda_i,\xi)$ is tight,
+%     \item [(b)] $\Lambda_i$ and $\Lambda_j$ are formally Legendrian isotopic for all $i,j$,
+%     \item [(c)] $\Lambda_i$ and $\Lambda_j$ are not Legendrian isotopic if $i\neq j$.
+% \end{itemize}
+% \end{theorem}
+
+
+
+% \textcolor{red}{E:The next is very cofusing badly written. It is just to not foget about it} Maybe a more abstract/useful statement is the following one. Let $\FC(M;\rel B)$ be the space of formal contact structures on $M$ that coincide over a Darboux ball $B\subseteq M$ and $C(M;\rel B)\hookrightarrow \FC(M;\rel B)$ the subspace of contact structures. Denote by $$K\C_{j}^{(M,\xi)}=\ker(\pi_j(\C(M,\rel B),\xi))\rightarrow \pi_j(\FC(M,\rel B,\xi))).$$
+
+% Given a contact manifold $(M,\xi)$ we denote by $\FL(M,\xi)$ and $\L(M,\xi)$ the space of formal Legendrian embeddings and Legendrian embeddings of spheres into $(M,\xi)$. Denote by 
+% $$ K\L_{j}^{L,(M,\xi)}=\ker(\pi_j(\L(M,\xi),L)\rightarrow \pi_j(\FL(M,\xi),L)) $$
+
+% \begin{theorem}
+%     Let $\Lambda\subseteq (B,\xi_{std})$ the standard Loose Legendrian unknot. Assume that there exists a non-zero element $A\in K\C_{j}^{(M,\xi)}$. Then, there exists a non-zero element $\tilde{A}\in K\L_{j}^{L,(M(+\Lambda),\xi_{+\Lambda})}.$ Here, $(M(+\Lambda),\xi_{+\Lambda})$ is obtained from $(M,\xi)$ from Legendrian surgery along $\Lambda$ and $L$ is the resulting belt Legendrian. 
+% \end{theorem}
+
+\section{Formal contactomorphisms}
+
+\textcolor{red}{The following lemma is not essential but makes the statement about Legendrian surgery contactomorphisms more appealing since it avoids asking the relative to a ball in the statement}
+
+
+\begin{lemma}\label{lem:FormallyTrivialRelativeBall}
+    Let $(M,\xi)$ be a contact manifold, $\varphi\in \Cont(M,\xi)$ a contactomorphism formally isotopic to the identity and $\B\subseteq (M,\xi)$ a Darboux ball. Then, $\varphi$ is contact isotopic to a contactomorphism $\hat{\varphi}$ such that
+    \begin{itemize}
+        \item $\hat{\varphi}_{\B}=\Id$.
+        \item $\hat{\varphi}$ is formally contact isotopic to the identity relative to $\B$. 
+    \end{itemize}
+\end{lemma}
+\begin{proof}
+    Proof idea, details to be filled. Consider a formal isotopy to the identity $(\varphi_t,F_{s,t})$. 
+    \begin{itemize}
+        \item \underline{Step I:} First after a homotopy make $F_{s,t}(\xi_{|\B})$ contact on $\varphi_t(\B)$ for all $s,t$. 
+        \item \underline{ Step II:} Let $p\in \B$ be the center of the ball. After a Hamiltonian isotopy we can assume $\varphi_t(p)=p$. 
+         \item \underline{ Step III:} Consider the family of frames $(p, F_{s,t}(p))$, by smooth isotopy extension (or by hand) we can find diffeos $H_{s,t}\in \Diff(M)$ such that 
+    \begin{itemize}
+        \item $H_{s,t}=\Id$ for $(s,t)\in [0,1]\times \{0,1\}\cup \{0\}\times [0,1]$
+        \item $(H_{s,t})_{*} F_{1-s}(p)=F_1(p)$.
+    \end{itemize}
+    With this diffeos we can homotope $(\varphi_t,F_{s,t})$ into a new homotopy $(\hat{\varphi}_t,\hat{F}_{s,t})$ that is actually contact on $p$: $\hat{F}_{s,t}(p)=d\hat{\varphi}_t$.
+    \item \underline{Step  IV:} Now we use Moser/Gray and the hypothesis of Step I plus the last condition to make all the $\hat{\varphi}_t$ contact near $p$. 
+    \item \underline{Step V:} Since all the $\hat{\varphi}_t$ are contact near $p$ (in a ball $\B$) we can generate the path of \textbf{Darboux balls} $\hat{\varphi}_t(\B)$ by a Hamiltonian isotopy. We use this Hamiltonian isotopy to finally fix the ball. 
+    \end{itemize}
+\end{proof}
+
+\begin{lemma}\label{lem:FormalContact3D}
+Let $(M,\xi)$ be an overtwisted contact $3$-manifold and $\Delta_{\OT}\subseteq (M,\xi)$ an overtwisted disk. Then, the inclusion $\Cont(M,\xi;\rel \Delta_{\OT})\hookrightarrow \FCont(M,\xi;\rel \Delta_{\OT})$.
+\end{lemma}
+\begin{remark}
+    \textcolor{red}{E:In the higher dimensional case: almost contactomorphisms. We need to think if this is enough for the Legendrian surgery realization statement}
+\end{remark}
+
+\section{Legendrian surgery}
+
+\begin{lemma}[Cancellation Lemma, Ding-Geiges] \label{lem:Cancellation}
+Let $(M,\xi)$ be a contact manifold and $\Lambda\subseteq (M,\xi)$ a Legendrian sphere. Consider a positive push-off $\hat{\Lambda}$ of $\Lambda$. Then, $(M(\pm\Lambda)(\mp\hat{\Lambda}),\xi(\pm\Lambda)(\mp\hat{\Lambda}))\cong (M,\xi)$
+\end{lemma}
+
+\section{The group of overtwisted $3$-spheres}
+
+Overtwisted contact structures on the $3$-sphere were classified by Eliashberg as a consequence of the $h$-principle for overtwisted contact structures. In particular, they are classified by their formal data. 
+
+Let us recall the classification. Fix the quaternionic trivialization of the tangent bundle $$\NS^3\times \R^3\cong T\NS^3,(p,(v_1,v_2,v_3))\mapsto (p, v_1 i\cdotp +v_2 j\cdotp +v_3 k\cdot p).$$ With this coordinate system we can consider the Gauss map of every co-oriented contact structure on $\NS^3$ to define a map $$\C(\NS^3)\rightarrow \Maps(\NS^3,\NS^2),\xi\mapsto f_\xi.$$ Notice that $f_{\xi_{std}}\equiv (1,0,0)$ is the constant map. We denote the Hopf invariant of $f_\xi$ as $h(f_\xi)$.
+
+\begin{theorem}
+    $\pi_0(\C_{\OT}(\NS^3))=\{\xi_k:k\in \Z\}$ where $\xi_k$ is defined as the unique (up to isotopy) overtwisted contact structure such that $h(f_{\xi_k})=k$.
+\end{theorem}
+
+With this trivialization the Hopf invariant is additive under contact connected sum. In particular, 
+
+\begin{corollary}
+    The monoid morphism $(\pi_0(\C_{\OT}(\NS^3)),\#)\rightarrow (\Z,+), \xi_k\mapsto k;$ is a group homomorphism. 
+\end{corollary}
+
+\begin{corollary}\label{cor:ConnectedSumOTSphere}
+    Let $(M,\xi)$ be an overtwisted contact $3$-manifold. Then, for every $k\in \Z$, there exists an overtwisted contact structure $\hat{\xi}$ on $M$ such that $(\NS^3,\xi_k)\#(M,\hat{\xi})\cong (M,\xi)$.
+\end{corollary}
+\begin{proof}
+    Take $(M,\hat{\xi})=(M,\xi)\#(\NS^3,\xi_{-k})$.
+\end{proof}
+
+\section{Legendrian surgery on overtwisted contact $3$-manifolds}
+
+\begin{theorem}[Etnyre-Honda]\label{thm:OTLegendrianSurgery}
+    Let $(M,\xi)$ be an overtwisted contact structure. Then, there exists a infinitely many Legendrian links $\Lambda_i\subseteq (M,\xi)$, $i\in \Z_{\geq 0}$, such that $(M(\Lambda_i),\xi(\Lambda_i))\cong (\NS^3,\xi_{std})$.
+\end{theorem}
+\begin{proof}
+    Etnyre-Honda (check also Geiges-Ding-Stipsicz) found a Legendrian link $\Lambda\subseteq (M,\xi)$ such that $(M(\xi),\xi(\Lambda))\cong (\NS^3,\xi_{std})$. 
+    To obtain infinitely many examples we proceed as follows. Consider a Legendrian link $\Lambda_0\subseteq (\NS^3,\xi_0)$ such that $(\NS^3(\Lambda_0),\xi(\Lambda_0))=(\NS^3,\xi_{std})$. By the overtwisted  $h$-principle we can realize $(M,\xi)\cong(M,\xi)\#(\NS^3,\xi_0)$. Hence, there is a new link $\hat{\Lambda}=\Lambda\cup \Lambda_0\subseteq (M,\xi)$ such that
+   Therefore, $$(M(\hat{\Lambda}),\xi(\hat{\Lambda})\cong (M(\Lambda),\xi(\Lambda))\#(\NS^3(\Lambda_0),\xi(\Lambda_0))\cong (\NS^3,\xi_{std})\#(\NS^3,\xi_{std})\cong(\NS^3,\xi_{std}).$$
+   Iterating the previous process we find the infinitely many examples. 
+\end{proof}
+
+\begin{corollary}\label{cor:LooseSurgeryOTSpheres}
+    Let $(M,\xi)$ be an overtwisted contact structure. Then, for every overtwisted contact $3$-sphere $(\NS^3,\xi_k)$ there exists infinitely many loose Legendrians $\Lambda_i\subseteq (M,\xi)$, $i\in \Z_{\geq 0}$, such that $(M(\Lambda_i),\xi(\Lambda_i))\cong (\NS^3,\xi_k)$.
+\end{corollary}
+\begin{proof}
+  By Corollary \ref{cor:ConnectedSumOTSphere} we can write $(M,\xi)\cong (M,\hat{\xi})\#(\NS^3,\xi_k)$ for some overtwisted contact structure $\hat{\xi}$ on $M$. Theorem \ref{thm:OTLegendrianSurgery} implies the existence of infinitely many Legendrians $\Lambda_i\subseteq (M,\hat{\xi})$, $i\in \Z_{\geq 0}$, such that $(M(\Lambda_i),\hat{\xi}(\Lambda_i))\cong (\NS^3,\xi_{std})$. We can naturally realize this Legendrians as a family of loose Legendrians in $(M,\xi)=(M,\hat{\xi})\#(\NS^3,\xi_k)$ that we still denote by $\Lambda_i$. It follows that 
+  $$(M(\Lambda_i),\xi(\Lambda_i))=(M(\Lambda_i),\hat{\xi}(\Lambda_i))\#(\NS^3,\xi_k)\cong(\NS^3,\xi_{std})\#(\NS^3,\xi_k)\cong(\NS^3,\xi_k)$$
+  as required.
+\end{proof}
+
+
+\section{Proof of Theorem \ref{thm:SurgeryContactomorphism}}
+
+\textcolor{red}{E:We give a proof in the $3D$-case}
+
+Let $\varphi\in \KC_0(M,\xi)$ be a formally trivial contactomorphism. Consider any formal isotopy $(\varphi_t,F_{s,t})\in\FCont(M,\xi)$, $t\in[0,1]$, between $\Id=(\varphi_0,F_{s,0})$ and $\varphi=(\varphi_1,F_{s,1})$. By Lemma \ref{lem:FormallyTrivialRelativeBall}, after a possibly contact isotopy of $\varphi$, we may assume that every formal contactomorphism $(\varphi_t,F_{s,t})$ is the identity over a small Darboux ball $\B^3\subseteq (M,\xi)$.
+
+
+Let $(N,\xi_{\OT})$ and $\Lambda\subseteq (N,\xi_{\OT})$ be an overtwisted contact $3$-manifold together with a Legendrian link such that $$(N(\Lambda),\xi_{\OT}(\Lambda))\cong (\NS^3,\xi_{std}).$$
+
+By the Cancellation Lemma \ref{lem:Cancellation} we can find a Legendrian $\hat{\Lambda}\subseteq (\NS^3,\xi_{std})$ such that $+$-surgery on it cancels out the previous surgery, i.e.
+$$(\NS^3(+\hat{\Lambda}),\xi_{std}(+\hat{\Lambda}))\cong (N,\xi_{\OT}).$$
+
+Regarding $\hat{\Lambda}$ as a Legendrian in a Darboux ball we can also realize it as a Legendrian in $(M,\xi)$ lying in the Darboux ball $\B^3$ in which the formal isotopy $(\varphi_t,F_{s,t})$ is the identity. 
+
+Perform a $+$-surgery on $\hat{\Lambda}\subseteq \B\subseteq (M,\xi)$ to obtain 
+
+$$ (M(+\hat{\Lambda}),\xi(+\hat{\Lambda}))\cong(M,\xi)\#(\NS^3(+\hat{\Lambda}),\xi_{std}(+\hat{\Lambda}))\cong(M,\xi)\#(N,\xi_{\OT}). $$
+
+Notice that Legendrian surgery on $\Lambda\subseteq (N,\xi_{\OT})\subseteq (M,\xi)\#(N,\xi_{\OT})$ bring us back to $(M,\xi)$. 
+
+Since every formal contactomorphism $(\varphi_t,F_{s,t})$, $t\in [0,1]$, is the identity over $\B$ we may extend them as the identity over the surgery region to obtain an isotopy of formal contactomorphisms 
+$$ (\hat{\varphi}_t,\hat{F}_{s,t})\in \FCont(M\#N,\xi\#\xi_{\OT}),t\in[0,1], $$
+between the identity and a genuine contactomorphism $\hat{\varphi}$ that agrees with $\varphi$ away from the surgery region. Moreover, all these formal contactomorphisms are the identity over the overtwisted region $(N,\xi_{\OT})$ on the contact connected sum. 
+
+In particular, we can find an overtwisted disk $\Delta_{\OT}$ on which every formal contactomorphism $(\hat{\varphi}_t,\hat{F}_{s,t})$ is contact and agrees to the identity. 
+
+Apply the $h$-principle from Lemma \ref{lem:FormalContact3D} to find a homotopy of 
+
+$$ (\hat{\varphi}_{t,u},\hat{F}_{s,t,u}), u\in[0,1], $$
+
+such that 
+
+\begin{itemize}
+    \item $\Id=(\hat{\varphi}_{0,u},\hat{F}_{s,0,u})$ for all $u\in[0,1]$, 
+    \item $\varphi=(\hat{\varphi}_{1,u},\hat{F}_{s,1,u})$ for all $u\in[0,1]$, 
+    \item $(\hat{\varphi}_{t,u},\hat{F}_{s,t,u})=(\hat{\varphi}_{t},\hat{F}_{s,t})$ for $(t,u)\in \{0,1\}\times[0,1]\cup [0,1]\times \{0\}$.
+    \item $(\hat{\varphi}_{t,u},\hat{F}_{s,t,u})=(\hat{\varphi}_{t,u},d\hat{\varphi}_{t,u})\in\Cont(M\#N,\xi\#\xi_{\OT})$ is contact for all $(t,u)\in \{0,1\}\times[0,1]\cup [0,1]\times\{1\}$.
+\end{itemize}
+
+We  make an abuse of notation and denote the inclusion of the Legendrina $\Lambda$ also by $\Lambda$. Consider the loop of Legendrian embeddings $\Lambda^t\subseteq (M,\xi)\#(N,\xi_{\OT})$ given by 
+
+$$  \hat{\varphi}_{t,1}\circ \Lambda, t\in[0,1]  $$
+
+We observe that this loop is formally trivial by construction, indeed, 
+
+$$ (\hat{\varphi}_{t,u},\hat{F}_{s,t,u})\circ \Lambda, (t,u)\in[0,1]\times[0,1], $$
+
+defines a formal contraction since $(\hat{\varphi}_{t,0},\hat{F}_{s,t,0})\circ \Lambda=\Lambda$ by the assumption to be the identity in the overtwisted region $(N,\xi_{\OT})$.
+
+Moreover, by construction the Legendrian surgery contactomorphism associated to $\Lambda^t$ is 
+$$ W(\Lambda^t)=\varphi\in \Cont(M,\xi). $$
+
+Indeed, realize that the contact isotopy $\hat{\varphi}_{t,1}$ generates the loop $\Lambda^t$. Moreover, the contactomorphism $W(\Lambda^t)$ is defined to be equal to $\hat{\varphi}_{t,1}$ in the region $(M,\xi)\#(N,\xi_{\OT})\backslash \Op(\Lambda)\subseteq (M,\xi)$, so it coincides with $\varphi$ on that region; and to be the identity over the region $(\Op(\hat{\Lambda}),\xi_{std})\subseteq (M,\xi)$ on which it also coincides with $\varphi$.
+
+This proves that the restricted Legendrian surgery homomorphism 
+
+$$ W: \KL_1(\Lambda, (M,\xi)\#(N,\xi_{\OT}))\rightarrow \KC_0(M,\xi) $$
+
+is surjective, as required. 
+
+\textcolor{red}{Being precise it remains to prove the following to make sense of the statement:}
+
+$$ W( \KL_1(\Lambda, (M,\xi)\#(N,\xi_{\OT})) ) \subseteq \KC_0(M,\xi) $$
+
+\textcolor{red}{We should add this in a Lemma elsewhere, I haven't thought about the proof yet but it should be easy:) If it is not easy/not true we really do not care... It just looks prettier in the statement:)}
+
+\section{Proof of Theorem \ref{thm:LoopsOfLegendrians}}
+
+Consider the Chekanov-Vogel contactomorphism $\varphi_{CV}\in \Cont(\NS^3,\xi_{\OT})$ which is formally trivial but non-trivial. 
+
+Let $(M,\xi)$ be any overtwisted contact $3$-manifold. By Corollary \ref{cor:LooseSurgeryOTSpheres} ther exists infinitely many loose Legendrian links $\Lambda_i\subseteq (M,\xi)$, all of them non-isotopic (smoothly), such that 
+$$ (M(\Lambda_i),\xi(\Lambda_i))\cong(\NS^3,\xi_{\OT}). $$
+
+Apply Theorem \ref{thm:SurgeryContactomorphism}  to each $\Lambda_i$ to find a formally contractible Legendrian loop $\Lambda_i^\theta\in \KL_1(\Lambda_i,(M,\xi))$, $\theta\in \NS^1$, such that the associated Legendrian surgery contactomorphism is (up to contact isotopy)
+$$ W(\Lambda_i^\theta)=\varphi_{CV}\in \Cont(\NS^3,\xi_{OT})$$
+
+Since the contactomorphism $\varphi_{CV}$ is non-trivial and $W$ is a group homomorphism we conclude that each loop $\Lambda_i^\theta$ is non-trivial. This concludes the proof.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\bibliographystyle{plain}
+\bibliography{main}
+\end{document}
